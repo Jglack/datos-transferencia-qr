@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="format-detection" content="telephone=no">
   <title>Datos de Transferencia</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -74,15 +75,23 @@
       font-size: 0.95rem;
       font-weight: 500;
       color: #1a1a1a;
-      word-break: break-all;
       flex: 1;
+      min-width: 0;
       line-height: 1.35;
+      overflow-wrap: break-word;
     }
     .field-value.mono {
       font-family: 'SF Mono', Monaco, 'Cascadia Code', Consolas, monospace;
-      font-size: 0.98rem;
-      letter-spacing: 0.02em;
+      font-size: 0.95rem;
+      letter-spacing: 0.01em;
       color: #023E62;
+      /* Prevenir que iOS lo detecte como tel y quite estilos de link */
+      text-decoration: none;
+    }
+    /* Si iOS insiste en hacerlo link */
+    a[href^="tel"], a[href^="sms"] {
+      color: inherit !important;
+      text-decoration: none !important;
     }
     .copy-btn {
       background: #ffffff;
@@ -130,6 +139,22 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       font-weight: 600;
+    }
+
+    /* Pantallas angostas: apilar botón debajo del valor */
+    @media (max-width: 400px) {
+      .field-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+      .copy-btn {
+        width: 100%;
+        padding: 9px;
+      }
+      .field-value.mono {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
